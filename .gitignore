@@ -1,0 +1,14 @@
+/.vs
+/DotNetZipTest/obj
+/DotNetZipTest/bin
+/SharpZipLibTest/obj
+/SharpZipLibTest/bin
+/SharpZipLibTest2/a.zip
+/SharpZipLibTest2/bin
+/SharpZipLibTest2/obj
+/ZipArchiveTest/obj
+/ZipArchiveTest/bin
+/runSubst/bin
+/runSubst/obj
+/packages
+/ZipArchiveTest/packages.config
