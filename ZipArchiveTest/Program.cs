@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 
@@ -6,6 +7,38 @@ namespace ZipArchiveTest
 {
     class Program
     {
+        static void usage()
+        {
+            var location = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var commandName = Path.GetFileNameWithoutExtension(location);
+            Console.WriteLine("Usage:\n");
+            Console.WriteLine($"{commandName} <ZIP file path> <file path>...\n");
+            Environment.Exit(1);
+        }
+
+        static void Main(string[] args)
+        {
+            if (args.Length < 2)
+            {
+                usage();
+            }
+            var zipFilePath = args[0];
+
+            byte[] buffer = new byte[65536];
+            using (var os = File.Create(zipFilePath))
+            {
+                using (var a = new ZipArchive(os, ZipArchiveMode.Create))
+                {
+                    for (var i = 1; i < args.Length; i++)
+                    {
+                        var path = args[i];
+                        var entryName = Path.GetFileName(path);
+                        ZipFileExtensions.CreateEntryFromFile(a, path, entryName);
+                    }
+                }
+            }
+        }
+#if false
         static void Main(string[] args)
         {
             var filePathList = ConvertToFullPath(new List<string>() { "abc.txt", "def/ghi.txt", "jkl/pqr.txt" });
@@ -26,6 +59,7 @@ namespace ZipArchiveTest
             }
             return r;
         }
+#endif
 #if false
         /// <summary>
         /// ストリームにZIPエントリー群を追加する。
