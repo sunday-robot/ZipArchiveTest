@@ -12,3 +12,8 @@
 /runSubst/obj
 /packages
 /ZipArchiveTest/packages.config
+/testData/7zipTest.zip
+/testData/test.zip
+/あ_100M.bin
+/い_1G.bin
+/う_5G.bin
