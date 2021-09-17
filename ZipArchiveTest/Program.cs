@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Text;
 
 namespace ZipArchiveTest
 {
@@ -27,13 +27,13 @@ namespace ZipArchiveTest
             byte[] buffer = new byte[65536];
             using (var os = File.Create(zipFilePath))
             {
-                using (var a = new ZipArchive(os, ZipArchiveMode.Create))
+                using (var za = new ZipArchive(os, ZipArchiveMode.Create, true, Encoding.UTF8))
                 {
                     for (var i = 1; i < args.Length; i++)
                     {
                         var path = args[i];
                         var entryName = Path.GetFileName(path);
-                        ZipFileExtensions.CreateEntryFromFile(a, path, entryName);
+                        ZipFileExtensions.CreateEntryFromFile(za, path, entryName);
                     }
                 }
             }

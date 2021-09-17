@@ -4,6 +4,7 @@
     <ProjectView>ProjectFiles</ProjectView>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartWorkingDirectory>C:\DigitalSolution\sandBox\ZipArchiveTest\testData\</StartWorkingDirectory>
+    <StartWorkingDirectory>C:\DigitalSolution\sandBox\ZipArchiveTest\ZipArchiveTest\</StartWorkingDirectory>
+    <StartArguments>a.zip あ.txt</StartArguments>
   </PropertyGroup>
 </Project>

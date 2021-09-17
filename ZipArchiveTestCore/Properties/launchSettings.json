@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "ZipArchiveTestCore": {
+      "commandName": "Project",
+      "commandLineArgs": "a.zip あ.txt",
+      "workingDirectory": "C:\\DigitalSolution\\sandBox\\ZipArchiveTest\\ZipArchiveTestCore"
+    }
+  }
+}
