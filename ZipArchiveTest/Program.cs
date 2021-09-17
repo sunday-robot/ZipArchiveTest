@@ -7,7 +7,7 @@ namespace ZipArchiveTest
 {
     class Program
     {
-        static void usage()
+        static void Usage()
         {
             var location = System.Reflection.Assembly.GetExecutingAssembly().Location;
             var commandName = Path.GetFileNameWithoutExtension(location);
@@ -20,11 +20,10 @@ namespace ZipArchiveTest
         {
             if (args.Length < 2)
             {
-                usage();
+                Usage();
             }
             var zipFilePath = args[0];
 
-            byte[] buffer = new byte[65536];
             using (var os = File.Create(zipFilePath))
             {
                 using (var za = new ZipArchive(os, ZipArchiveMode.Create, true, Encoding.UTF8))

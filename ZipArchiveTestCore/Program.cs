@@ -7,7 +7,7 @@ namespace ZipArchiveTestCore
 {
     class Program
     {
-        static void usage()
+        static void Usage()
         {
             var location = System.Reflection.Assembly.GetExecutingAssembly().Location;
             var commandName = Path.GetFileNameWithoutExtension(location);
@@ -20,21 +20,17 @@ namespace ZipArchiveTestCore
         {
             if (args.Length < 2)
             {
-                usage();
+                Usage();
             }
             var zipFilePath = args[0];
 
-            using (var os = File.Create(zipFilePath))
+            using var os = File.Create(zipFilePath);
+            using var za = new ZipArchive(os, ZipArchiveMode.Create, true, Encoding.UTF8);
+            for (var i = 1; i < args.Length; i++)
             {
-                using (var za = new ZipArchive(os, ZipArchiveMode.Create, true, Encoding.UTF8))
-                {
-                    for (var i = 1; i < args.Length; i++)
-                    {
-                        var path = args[i];
-                        var entryName = Path.GetFileName(path);
-                        ZipFileExtensions.CreateEntryFromFile(za, path, entryName);
-                    }
-                }
+                var path = args[i];
+                var entryName = Path.GetFileName(path);
+                ZipFileExtensions.CreateEntryFromFile(za, path, entryName);
             }
         }
     }

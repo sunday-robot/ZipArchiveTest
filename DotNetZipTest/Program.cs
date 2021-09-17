@@ -26,7 +26,7 @@ namespace DotNetZipTest
             }
         }
 #else
-        static void usage()
+        static void Usage()
         {
             var location = System.Reflection.Assembly.GetExecutingAssembly().Location;
             var commandName = Path.GetFileNameWithoutExtension(location);
@@ -39,7 +39,7 @@ namespace DotNetZipTest
         {
             if (args.Length < 2)
             {
-                usage();
+                Usage();
             }
             var zipFilePath = args[0];
 

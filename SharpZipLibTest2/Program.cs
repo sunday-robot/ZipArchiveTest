@@ -37,8 +37,10 @@ namespace SharpZipLibTest2
                         var entryName = filePath.Substring(directoryPath.Length + 1);
                         Console.WriteLine($"{entryName}");
                         Console.WriteLine($"START : {DateTime.Now}");
-                        var entry = new ZipEntry(entryName);
-                        entry.IsUnicodeText = true; // ファイル名、コメントをUTF8で出力させる。
+                        var entry = new ZipEntry(entryName)
+                        {
+                            IsUnicodeText = true // ファイル名、コメントをUTF8で出力させる。
+                        };
                         zos.PutNextEntry(entry);
                         using (FileStream ifs = File.OpenRead(filePath))
                         {

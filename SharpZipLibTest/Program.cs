@@ -7,7 +7,7 @@ namespace SharpZipLibTest
 {
     class Program
     {
-        static void usage()
+        static void Usage()
         {
             var location = System.Reflection.Assembly.GetExecutingAssembly().Location;
             var commandName = Path.GetFileNameWithoutExtension(location);
@@ -20,13 +20,16 @@ namespace SharpZipLibTest
         {
             if (args.Length < 2)
             {
-                usage();
+                Usage();
             }
             var zipFilePath = args[0];
 
             byte[] buffer = new byte[65536];
-            using (var os = File.Create(zipFilePath))
+            Console.WriteLine($"create FileStream.");
+            //using (var os = File.Create(zipFilePath))
+            using (var os = UnseekableStream.Create(zipFilePath))
             {
+                Console.WriteLine($"create ZipOutputStream.");
                 using (var zos = new ZipOutputStream(os))
                 {
                     zos.UseZip64 = UseZip64.On; // 常にZIP64形式のZIPファイルを作成する
@@ -34,18 +37,29 @@ namespace SharpZipLibTest
                     {
                         var filePath = args[i];
                         var entryName = Path.GetFileName(filePath);
-                        Console.WriteLine($"START : {DateTime.Now}");
-                        var entry = new ZipEntry(entryName);
-                        entry.IsUnicodeText = true; // ファイル名、コメントをUTF8で出力させる。
-                        zos.PutNextEntry(entry);
-                        using (FileStream ifs = File.OpenRead(filePath))
+                        var entry = new ZipEntry(entryName)
                         {
-                            StreamUtils.Copy(ifs, zos, buffer);
+                            IsUnicodeText = true // ファイル名、コメントをUTF8で出力させる。
+                        };
+                        Console.WriteLine($"PutNextEntry({entryName})");
+                        zos.PutNextEntry(entry);
+                        using var ifs = File.OpenRead(filePath);
+                        while (true)
+                        {
+                            var len = ifs.Read(buffer);
+                            if (len == 0)
+                            {
+                                break;
+                            }
+                            Console.WriteLine($"Write(,, {len})");
+                            zos.Write(buffer, 0, len);
                         }
-                        Console.WriteLine($"END   : {DateTime.Now}");
                     }
                 }
+                Console.WriteLine($"disposed ZipOutputStream.");
             }
+            Console.WriteLine($"disposed FileStream.");
+            Console.ReadLine();
         }
     }
 }

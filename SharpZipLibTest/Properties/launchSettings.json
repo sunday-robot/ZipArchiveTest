@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "SharpZipLibTest": {
+      "commandName": "Project",
+      "commandLineArgs": "test.zip あ.txt abc.txt",
+      "workingDirectory": "C:\\DigitalSolution\\sandBox\\ZipArchiveTest\\testData"
+    }
+  }
+}
